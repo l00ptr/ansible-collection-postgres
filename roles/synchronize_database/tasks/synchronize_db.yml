@@ -1,0 +1,51 @@
+---
+- name: Create dump on database source serveur
+  postgresql_db:
+    name: "{{ item.src_name }}"
+    state: dump
+    target: "/tmp/{{ item.src_name }}.sql"
+    target_opts: "{{ item.dump_extra_args|default('') }}"
+  delegate_to: "{{ postgres_src_server }}"
+  become_user: postgres
+
+- name: Synchronize database
+  synchronize:
+    src: "/tmp/{{ item.src_name }}.sql"
+    dest: "/tmp/{{ item.dest_name }}.sql"
+  delegate_to: "{{ postgres_src_server }}"
+
+- name: Remove existing database on target
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item.dest_name }}"
+    owner: "{{ item.dest_owner }}"
+    state: absent
+
+- name: Create an empty database on target
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item.dest_name }}"
+    owner: "{{ item.dest_owner }}"
+    state: present
+
+- name: Restore dump on database destination server
+  postgresql_db:
+    name: "{{ item.dest_name }}"
+    owner: "{{ item.dest_owner }}"
+    state: restore
+    target: "/tmp/{{ item.dest_name }}.sql"
+    login_host: "{{ item.dest_login_host|default(None) }}"
+    login_user: "{{ item.dest_login_user|default(None) }}"
+    target_opts: "{{ item.restore_extra_args|default('') }}"
+  become_user: postgres
+
+- name: Execute postscripts
+  postgresql_query:
+    db: "{{ item.dest_name }}"
+    path_to_script: "{{ script }}"
+  become_user: postgres
+  loop: "{{ item.postscripts|default([]) }}"
+  loop_control:
+    loop_var: script

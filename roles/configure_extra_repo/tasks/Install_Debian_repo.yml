@@ -1,0 +1,10 @@
+---
+- name: Add an Apt signing key
+  apt_key:
+    id: "{{ item.repo_key_id | default(None) }}"
+    url: "{{ item.repo_key_url }}"
+    state: present
+- name: Add an Apt repository
+  apt_repository:
+    repo: "{{ item.repo_def }}"
+    state: present

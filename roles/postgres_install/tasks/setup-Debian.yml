@@ -1,0 +1,12 @@
+---
+- name: Ensure PostgreSQL packages are installed.
+  apt:
+    name: "{{ dalibo_postgresql_packages }}"
+    state: present
+  register: package_installed
+
+- name: Ensure all configured locales are present.
+  locale_gen: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ dalibo_postgresql_locales }}"

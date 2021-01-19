@@ -1,0 +1,16 @@
+postgresql_enablerepo: ""
+dalibo_dalibo_postgresql_version: 13
+packages:
+  RedHat:
+    - "postgresql{{ (dalibo_postgresql_version|string).split('.')|join('') }}"
+    - "postgresql{{ (dalibo_postgresql_version|string).split('.')|join('') }}-server"
+    - "postgresql{{ (dalibo_postgresql_version|string).split('.')|join('') }}-contrib"
+    - "postgresql{{ (dalibo_postgresql_version|string).split('.')|join('') }}-libs"
+  Debian:
+    - "postgresql-{{ dalibo_postgresql_version }}"
+    - "postgresql-contrib-{{ dalibo_postgresql_version }}"
+    - libpq-dev
+dalibo_postgresql_packages: "{{ packages[ansible_os_family] }}"
+postgresql_locales:
+  - 'en_US.UTF-8'
+

@@ -1,0 +1,27 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: postgresql
+  author: geerlingguy and l00ptr
+  description: PostgreSQL server for Linux.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+  galaxy_tags:
+    - database
+    - postgresql
+    - postgres
+    - rdbms

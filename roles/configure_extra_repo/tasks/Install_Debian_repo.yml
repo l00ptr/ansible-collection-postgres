@@ -1,10 +1,8 @@
 ---
-- name: Add an Apt signing key
-  apt_key:
-    id: "{{ item.repo_key_id | default(None) }}"
-    url: "{{ item.repo_key_url }}"
+- name: Install https transport for apt
+  package:
+    name: apt-transport-https
     state: present
-- name: Add an Apt repository
-  apt_repository:
-    repo: "{{ item.repo_def }}"
-    state: present
+- name: Add an Apt  extra repo
+  include_tasks: Install_Debian_repo.yml
+  loop: "{{ dalibo_postgres_debian_repo }}"

@@ -1,8 +1,5 @@
 ---
-- name: Install https transport for apt
-  package:
-    name: apt-transport-https
-    state: present
-- name: Add an Apt  extra repo
-  include_tasks: Install_Debian_repo.yml
-  loop: "{{ dalibo_postgres_debian_repo }}"
+- include: Install_RedHat_repo.yml
+  when: ansible_distribution == "CentOS"
+- include: Install_Debian_repo.yml
+  when: ansible_distribution == "Debian"

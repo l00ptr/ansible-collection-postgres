@@ -1,39 +1,15 @@
 ---
-- name: Get list package
-  uri:
-    url: "{{ postgresql_url_repo_path }}/yum/{{ postgresql_version }}/{{ ansible_os_family.lower() }}\
-    /{% if ansible_distribution == 'Fedora' %}{{ ansible_distribution.lower() }}{% else %}rhel{% endif %}\
-    -{{ ansible_distribution_version.split('.')[0] }}-{{ ansible_architecture }}"
-    return_content: true
-  register: webpage
-  when: postgresql_oficial_repo_install
-
-- name: Package name
-  set_fact:
-    package_name: "pgdg-{{ ansible_distribution.lower() }}({{ (postgresql_version|string).split('.')|join('') }})?\
-    -{{ postgresql_version }}-\\d+\\.noarch\\.rpm"
-  when: postgresql_oficial_repo_install
-
-- name: Search package
-  set_fact:
-    package_file_name: "{{ webpage.content|regex_search(package_name) }}"
-  when: postgresql_oficial_repo_install
-
 - name: Install designated repository.
   package:
-    name: "{{ postgresql_url_repo_path }}/yum/{{ postgresql_version }}/{{ ansible_os_family.lower() }}/\
-    {% if ansible_distribution == 'Fedora' %}{{ ansible_distribution.lower() }}{% else %}rhel{% endif %}-\
-    {{ ansible_distribution_version.split('.')[0] }}-{{ ansible_architecture }}/{{ package_file_name }}"
+    name: "{{ item.repo_rpm_install }}"
     state: present
-  when: postgresql_oficial_repo_install
+  loop: "{{ dalibo_postgres_redhat_repo }}"
 
-# Override package names and paths
-- name: Override default varibles.
-  set_fact:
-    postgresql_packages: !!null
-    postgresql_bin_path: !!null
-
-- name: Override default varibles.
-  set_fact:
-    postgresql_packages: "{{ postgresql_oficial_packages.RedHat|list }}"
-    postgresql_bin_path: "/usr/pgsql-{{ postgresql_version }}/bin"
+- name: Disable default postgresql module
+  ini_file:
+    path: /etc/dnf/modules.d/postgresql.module
+    section: postgresql
+    option: state
+    value: disabled
+    no_extra_spaces: yes
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"

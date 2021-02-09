@@ -1,0 +1,5 @@
+---
+- include: Install_RedHat_repo.yml
+  when: ansible_distribution == "CentOS"
+- include: Install_Debian_repo.yml
+  when: ansible_distribution == "Debian"

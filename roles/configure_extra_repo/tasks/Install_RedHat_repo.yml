@@ -1,0 +1,15 @@
+---
+- name: Install designated repository.
+  package:
+    name: "{{ item.repo_rpm_install }}"
+    state: present
+  loop: "{{ dalibo_postgres_redhat_repo }}"
+
+- name: Disable default postgresql module
+  ini_file:
+    path: /etc/dnf/modules.d/postgresql.module
+    section: postgresql
+    option: state
+    value: disabled
+    no_extra_spaces: yes
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"

@@ -1,0 +1,4 @@
+---
+- name: OS setup/install tasks.
+  include_tasks: setup-{{ ansible_os_family }}.yml
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Debian'

@@ -1,0 +1,15 @@
+---
+- name: Ensure PostgreSQL packages are installed.
+  yum:
+    name:
+      - "postgresql{{ (item.postgresql_version|string).split('.')|join('') }}"
+      - "postgresql{{ (item.postgresql_version|string).split('.')|join('') }}-server"
+      - "postgresql{{ (item.postgresql_version|string).split('.')|join('') }}-contrib"
+      - "postgresql{{ (item.postgresql_version|string).split('.')|join('') }}-libs"
+    state: present
+    enablerepo: "{{ dalibo_postgresql_enablerepo | default(omit, true) }}"
+    # Don't let postgresql-contrib cause the /usr/bin/python symlink
+    # to be installed, which breaks later Ansible runs on Fedora 30,
+    # and affects system behavior in multiple ways.
+    exclude: python-unversioned-command
+  loop: "{{ dalibo_postgresql_instances }}"

@@ -12,6 +12,11 @@ This collection is currently only available for Debian 9 and 10.
 2.10
 
 ## Included content
+### Roles
+- configure_extra_repo (Allow to install the PGDG repo)
+- postgres_install (Allow to install the postgres packages)
+- postgres_instance_configure (Allow to init and configure our postgres instances)
+
 ## Using this collection
 
 Please refer to the examples in the readmes of the role.

@@ -3,6 +3,15 @@
   package:
     name: apt-transport-https
     state: present
+
+- name: Add an Apt extra repo key
+  apt_key:
+    url: "{{ item.repo_key_url | default(None) }}"
+    state: present
+  loop: "{{ dalibo_postgres_debian_repo }}"
+
 - name: Add an Apt  extra repo
-  include_tasks: Install_Debian_repo.yml
+  apt_repository:
+    repo: "{{ item.repo_def }}"
+    state: present
   loop: "{{ dalibo_postgres_debian_repo }}"

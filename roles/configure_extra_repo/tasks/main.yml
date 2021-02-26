@@ -1,5 +1,3 @@
 ---
-- include: Install_RedHat_repo.yml
-  when: ansible_distribution == "CentOS"
-- include: Install_Debian_repo.yml
-  when: ansible_distribution == "Debian"
+- name: Include specific task for RHEL and CentOS
+  include_tasks: Install_{{ ansible_os_family }}_repo.yml

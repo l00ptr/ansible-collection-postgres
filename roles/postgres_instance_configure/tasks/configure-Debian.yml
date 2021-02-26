@@ -1,0 +1,18 @@
+---
+- name: Ensure PostgreSQL database is initialized.
+  shell: |
+    /usr/bin/pg_createcluster {{item.postgresql_version}} {{ item.name }} \
+    --port={{ item.port|default('5432') }} \
+    -D {{ item.pgdata_path }} {{ item.initdb_options|default()|join(' ') }}
+  become: true
+  become_user: "{{ dalibo_postgresql_user }}"
+  #  when: 
+  #  - not pgdata_dir_version.stat.exists
+  #  - ansible_os_family == 'RedHat'
+- name: Set custom options
+  debug:
+    msg: "{{ an_option }}"
+  loop: "{{ item.custom_config_options }}"
+  loop_control:
+    loop_var: an_option
+  when: item.custom_config_options is defined

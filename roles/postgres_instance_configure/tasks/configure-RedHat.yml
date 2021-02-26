@@ -1,0 +1,20 @@
+- name: Create parent directory
+  file:
+    path: "{{ item.pgdata_path }}"
+    owner: "{{ dalibo_postgresql_user }}"
+    recurse: yes
+    state: directory
+  register: create_parent_dir
+
+- name: Check if postgres pgdata is empty
+  stat:
+    path: "{{ item.pgdata_path }}/PG_VERSION"
+  register: check_pgdata_content_initialized
+
+- name: Ensure PostgreSQL database is initialized.
+  shell: |
+    /usr/pgsql-{{item.postgresql_version}}/bin/initdb \
+    -D {{ item.pgdata_path }} {{ item.initdb_options|default()|join(' ') }}
+  become: true
+  become_user: "{{ dalibo_postgresql_user }}"
+  when: not check_pgdata_content_initialized.stat.exists

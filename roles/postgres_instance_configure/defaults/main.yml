@@ -1,0 +1,3 @@
+---
+# defaults file for configure_postgres
+dalibo_postgresql_user: postgres

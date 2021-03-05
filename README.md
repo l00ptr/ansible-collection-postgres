@@ -1,11 +1,12 @@
 # Ansible Collection - l00ptr.postgres
 
 ## Description
-This collection provides roles to install, configure and manager your PostgreSQL infrastructure.
+This collection provides a few roles to install, configure and manage your postgres 
+infrastructure.
 
 We try to keep variable name consistent between the roles composing this collection.
 
-This collection is currently only available for Debian 9 and 10.
+This collection is under develoment and currently only available for Debian 9 and 10.
 
 ## Tested with Ansible
 
@@ -13,7 +14,7 @@ This collection is currently only available for Debian 9 and 10.
 
 ## Included content
 ### Roles
-- configure_extra_repo (Allow to install the PGDG repo)
+- configure_pgdg_repo (Allow to install the PGDG repo)
 - postgres_install (Allow to install the postgres packages)
 - postgres_instance_configure (Allow to init and configure our postgres instances)
 
@@ -29,7 +30,8 @@ See the [contributor guideline](CONTRIBUTING.md).
 
 ## Roadmap
 - Add tests and CI testing
-- Add support for more operating systems,
+- Add support for more operating systems
+- Add role to configure and manage PITR backup
 
 ## More information
 

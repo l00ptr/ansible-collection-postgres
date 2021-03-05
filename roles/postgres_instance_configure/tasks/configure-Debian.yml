@@ -1,4 +1,9 @@
 ---
+- name: Check if postgres pgdata is empty
+  stat:
+    path: "{{ item.pgdata_path }}/PG_VERSION"
+  register: check_pgdata_content_initialized
+
 - name: Ensure PostgreSQL database is initialized.
   shell: |
     /usr/bin/pg_createcluster {{item.postgresql_version}} {{ item.name }} \
@@ -6,9 +11,8 @@
     -D {{ item.pgdata_path }} {{ item.initdb_options|default()|join(' ') }}
   become: true
   become_user: "{{ dalibo_postgresql_user }}"
-  #  when: 
-  #  - not pgdata_dir_version.stat.exists
-  #  - ansible_os_family == 'RedHat'
+  when: not check_pgdata_content_initialized.stat.exists
+
 - name: Set custom options
   debug:
     msg: "{{ an_option }}"

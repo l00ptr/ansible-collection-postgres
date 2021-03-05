@@ -3,4 +3,3 @@
 - name: Include specific task for RHEL and CentOS
   include_tasks: configure-{{ ansible_os_family }}.yml
   loop: "{{ dalibo_postgresql_instances }}"
-  

@@ -18,3 +18,30 @@
   become: true
   become_user: "{{ dalibo_postgresql_user }}"
   when: not check_pgdata_content_initialized.stat.exists
+
+- name: Set port for our newly created instance
+  lineinfile:
+    path: "{{ item.pgdata_path }}/postgresql.auto.conf"
+    state: present
+    regexp: '^port ='
+    line: "port = '{{ item.port }}'"
+
+- name: Copy systemd unit file
+  copy:
+    src: /lib/systemd/system/postgresql-{{item.postgresql_version}}.service
+    dest: /etc/systemd/system/postgresql-{{item.postgresql_version}}-{{item.name}}.service
+    remote_src: yes
+
+- name: Set PGDATA in unit file
+  replace:
+    regexp: 'PGDATA=.*$'
+    replace: 'PGDATA={{item.pgdata_path }}'
+    path: /etc/systemd/system/postgresql-{{item.postgresql_version}}-{{item.name}}.service
+
+- name: Reload unit and enable our new instance
+  systemd:
+    name: postgresql-{{item.postgresql_version}}-{{item.name}}
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

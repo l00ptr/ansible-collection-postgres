@@ -1,0 +1,30 @@
+---
+# This is an example playbook to execute Ansible tests.
+- name: Verify
+  hosts: all
+  tasks:
+    - name: "Check postgres 10 and 12 package status"
+      package:
+        name: 
+          - postgresql10
+          - postgresql12
+        state: "installed"
+      check_mode: yes
+      register: pkg_status_postgres_10_and_12
+
+    - name: "Test postgres 10 and 12 package is installed"
+      assert:
+        that:
+          - not pkg_status_postgres_10_and_12.changed
+
+    - name: "Check postgres 13 package status"
+      package:
+        name: "postgresql13"
+        state: "installed"
+      check_mode: yes
+      register: pkg_status_postgres13
+
+    - name: "Test postgres 13 package is installed"
+      assert:
+        that:
+          - pkg_status_postgres13.changed

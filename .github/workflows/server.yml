@@ -1,5 +1,12 @@
-name: "postgres.postgres.zabbix_server"
+name: "dalibo.postgres"
 jobs:
+  on:
+    push:
+      branches:
+        - main
+      pull_request:
+        branches:
+          - main
   molecule:
     runs-on: 18.04
     strategy:

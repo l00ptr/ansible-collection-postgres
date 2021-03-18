@@ -59,6 +59,4 @@ scenario:
     - cleanup
     - destroy
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible

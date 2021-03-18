@@ -21,8 +21,8 @@ provisioner:
     name: ansible-lint
   env:
     ANSIBLE_REMOTE_TMP: /tmp/
-    ANSIBLE_COLLECTIONS_PATHS: $HOME/.ansible/collections/ansible_collections/community/postgres
-    ANSIBLE_ROLES_PATH: $HOME/.ansible/collections/ansible_collections/community/postgres/roles
+    ANSIBLE_COLLECTIONS_PATHS: $HOME/.ansible/collections/ansible_collections/l00ptr/postgres
+    ANSIBLE_ROLES_PATH: $HOME/.ansible/collections/ansible_collections/l00ptr/postgres/roles
   inventory:
     group_vars:
       all:

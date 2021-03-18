@@ -5,33 +5,29 @@
   vars:
     postgres_pckg_base_name: "postgresql"
   tasks:
-    - name: "Set base name for postgres package"
-      set_fact:
-        postgres_pckg_base_name: "postgresql-"
-      when: ansible_distribution == 'Debian'
+    - name: "Include var file"
+      include_vars: "vars/{{ ansible_distribution }}.yml"
 
     - name: "Check postgres 10 and 12 package status"
       package:
-        name: 
-          - postgresql10
-          - postgresql12
+        name: "{{ installed_packages }}"
         state: present
       check_mode: yes
-      register: pkg_status_postgres_10_and_12
+      register: status_installed_packages
 
-    - name: "Test postgres 10 and 12 package is installed"
+    - name: "Test postgres 10 and 12 package are installed"
       assert:
         that:
-          - not pkg_status_postgres_10_and_12.changed
+          - not status_installed_packages.changed
 
     - name: "Check postgres 13 package status"
       package:
-        name: postgresql13
+        name: "{{ not_installed_packages }}"
         state: present
       check_mode: yes
-      register: pkg_status_postgres13
+      register: status_not_installed_packages
 
     - name: "Test postgres 13 package is installed"
       assert:
         that:
-          - pkg_status_postgres13.changed
+          - status_not_installed_packages.changed

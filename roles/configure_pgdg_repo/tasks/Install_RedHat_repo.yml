@@ -1,9 +1,14 @@
 ---
+- name: Install PDGD rpm key
+  rpm_key:
+    key: "{{ item.repo_key_url }}"
+    state: present
+  loop: "{{ dalibo_postgres_redhat_repo }}"
+
 - name: Install designated repository.
-  dnf:
+  package:
     name: "{{ item.repo_rpm_install }}"
     state: present
-    disable_gpg_check: yes
   loop: "{{ dalibo_postgres_redhat_repo }}"
 
 - name: Disable default postgresql module

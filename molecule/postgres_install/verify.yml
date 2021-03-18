@@ -8,7 +8,7 @@
         name: 
           - postgresql10
           - postgresql12
-        state: "installed"
+        state: present
       check_mode: yes
       register: pkg_status_postgres_10_and_12
 
@@ -19,8 +19,8 @@
 
     - name: "Check postgres 13 package status"
       package:
-        name: "postgresql13"
-        state: "installed"
+        name: postgresql13
+        state: present
       check_mode: yes
       register: pkg_status_postgres13
 

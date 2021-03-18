@@ -2,7 +2,14 @@
 # This is an example playbook to execute Ansible tests.
 - name: Verify
   hosts: all
+  vars:
+    postgres_pckg_base_name: "postgresql"
   tasks:
+    - name: "Set base name for postgres package"
+      set_fact:
+        postgres_pckg_base_name: "postgresql-"
+      when: ansible_distribution == 'Debian'
+
     - name: "Check postgres 10 and 12 package status"
       package:
         name: 

@@ -1,5 +1,5 @@
 # Ansible Collection - l00ptr.postgres
-[![dalibo.postgres](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml/badge.svg)](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml)
+[![l00ptr.postgresql_install](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml/badge.svg)](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml)
 
 ## Description
 This collection provides a few roles to install, configure and manage your postgres 

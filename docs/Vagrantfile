@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+VM = {
+  'postgres-debian10' => {
+    'playbooks' => ['postgresql-multi-instances.yml.yml'],
+    'groups' => ['postgres'],
+    'os' => 'debian/buster64'
+  },
+  'postgres-centos7' => {
+    'playbooks' => ['postgresql-multi-instances.yml.yml'],
+    'groups' => ['postgres'],
+    'os' => 'centos/7'
+  }
+}
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure('2') do |config|
+  config.vm.synced_folder '.', '/vagrant', type: 'nfs'
+  VM.each do |hostname, ansible_def|
+    config.vm.define hostname do |a_box|
+      a_box.vm.box = ansible_def['os']
+      a_box.vm.hostname = hostname
+    end
+    ####
+    # Generate group def
+    ansible_group_def = {}
+    ansible_def['groups'].each do |a_group|
+      ansible_group_def[a_group] = hostname
+    end
+    ####
+    # Run playbook
+    ansible_def['playbooks'].each do |a_playbook|
+      config.vm.provision a_playbook, type: 'ansible' do |ansible|
+        ansible.playbook = a_playbook
+        ansible.groups = ansible_group_def
+      end
+    end
+  end
+end

@@ -18,7 +18,7 @@ jobs:
           - container: pgsql-debian
             image: geerlingguy/docker-debian10-ansible
         collection_role:
-          - postgres_install
+          - postgresql_install
     steps:
       - name: Check out code
         uses: actions/checkout@v1

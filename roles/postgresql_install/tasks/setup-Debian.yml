@@ -6,10 +6,10 @@
     - "postgresql-contrib-{{ item.postgresql_version }}"
     - libpq-dev
     state: present
-  loop: "{{ dalibo_postgresql_instances }}"
+  loop: "{{ postgresql_instances }}"
 
 - name: Ensure all configured locales are present.
   locale_gen:
     name: "{{ item }}"
     state: present
-  loop: "{{ dalibo_postgresql_locales }}"
+  loop: "{{ postgresql_locales }}"

@@ -1,8 +1,9 @@
 # Ansible Collection - l00ptr.postgres
+[![dalibo.postgres](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml/badge.svg)](https://github.com/l00ptr/ansible-collection-postgres/actions/workflows/postgresql_install.yml)
 
 ## Description
 This collection provides a few roles to install, configure and manage your postgres 
-infrastructure.
+instances.
 
 We try to keep variable name consistent between the roles composing this collection.
 
@@ -14,13 +15,14 @@ This collection is under develoment and currently only available for Debian 9 an
 
 ## Included content
 ### Roles
-- configure_pgdg_repo (Allow to install the PGDG repo)
-- postgres_install (Allow to install the postgres packages)
-- postgres_instance_configure (Allow to init and configure our postgres instances)
+
+- [configure_pgdg_repo](docs/role_configure_pgdg_repo.md) (Allow to install the PGDG repo)
+- [postgresql_install](docs/role_postgresql_install.md) (Allow to install the postgres packages)
+- [configure_instances](docs/role_configure_instances.md) (Allow to init and configure our postgres instances)
 
 ## Using this collection
 
-Please refer to the examples in the readmes of the role.
+Please refer to the examples in the [examples.md](docs/examples.md) you can also read the playbooks available on the docs directory.
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
@@ -29,9 +31,11 @@ See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_gui
 See the [contributor guideline](CONTRIBUTING.md).
 
 ## Roadmap
-- Add tests and CI testing
+- Imrpove tests
 - Add support for more operating systems
 - Add role to configure and manage PITR backup
+- Add role to configure and manage replication
+- Add role to configure and manage pg_back 
 
 ## More information
 

@@ -1,4 +1,4 @@
-name: "dalibo.postgres"
+name: "l00pr.postgres"
 on:
   push:
     branches:

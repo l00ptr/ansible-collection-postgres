@@ -10,7 +10,7 @@
     --port={{ item.port|default('5432') }} \
     -D {{ item.pgdata_path }} {{ item.initdb_options|default()|join(' ') }}
   become: true
-  become_user: "{{ dalibo_postgresql_user }}"
+  become_user: "{{ postgresql_user }}"
   when: not check_pgdata_content_initialized.stat.exists
 
 - name: Set custom options

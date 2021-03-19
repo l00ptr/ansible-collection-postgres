@@ -3,21 +3,21 @@
   rpm_key:
     key: "{{ item.repo_key_url }}"
     state: present
-  loop: "{{ dalibo_postgres_redhat_repo }}"
+  loop: "{{ postgresql_redhat_repo }}"
 
 - name: Install designated repository.
   yum:
     name: "{{ item.repo_rpm_install }}"
     state: present
     disable_gpg_check: yes
-  loop: "{{ dalibo_postgres_redhat_repo }}"
+  loop: "{{ postgresql_redhat_repo }}"
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
 
 - name: Install designated repository.
   dnf:
     name: "{{ item.repo_rpm_install }}"
     state: present
-  loop: "{{ dalibo_postgres_redhat_repo }}"
+  loop: "{{ postgresql_redhat_repo }}"
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"
 
 - name: Disable default postgresql module

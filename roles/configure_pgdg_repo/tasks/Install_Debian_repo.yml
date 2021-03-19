@@ -8,10 +8,10 @@
   apt_key:
     url: "{{ item.repo_key_url | default(None) }}"
     state: present
-  loop: "{{ dalibo_postgres_debian_repo }}"
+  loop: "{{ postgresql_debian_repo }}"
 
 - name: Add an Apt  extra repo
   apt_repository:
     repo: "{{ item.repo_def }}"
     state: present
-  loop: "{{ dalibo_postgres_debian_repo }}"
+  loop: "{{ postgresql_debian_repo }}"

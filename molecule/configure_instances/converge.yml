@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: configure_pgdg_repo
+    - role: postgresql_install
+    - role: configure_instances 

@@ -1,6 +1,0 @@
----
-installed_packages:
-  - postgresql10
-  - postgresql12
-not_installed_packages:
-  - postgresql13

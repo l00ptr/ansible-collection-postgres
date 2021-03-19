@@ -1,7 +1,7 @@
 - name: Create parent directory
   file:
     path: "{{ item.pgdata_path }}"
-    owner: "{{ dalibo_postgresql_user }}"
+    owner: "{{ postgresql_user }}"
     recurse: yes
     state: directory
   register: create_parent_dir
@@ -16,7 +16,7 @@
     /usr/pgsql-{{item.postgresql_version}}/bin/initdb \
     -D {{ item.pgdata_path }} {{ item.initdb_options|default()|join(' ') }}
   become: true
-  become_user: "{{ dalibo_postgresql_user }}"
+  become_user: "{{ postgresql_user }}"
   when: not check_pgdata_content_initialized.stat.exists
 
 - name: Set port for our newly created instance

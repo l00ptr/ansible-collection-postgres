@@ -1,11 +1,11 @@
 ---
 # defaults file for configure_extra_repo
-dalibo_postgres_debian_repo:
+postgresql_debian_repo:
   - repo_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
     repo_def: "deb http://apt.postgresql.org/pub/repos/apt buster-pgdg main"
 
-dalibo_pgdg_redhat_repo_baseurl: https://download.postgresql.org/pub/repos/yum/reporpms/
-dalibo_pgdg_redhat_url: "{{ dalibo_pgdg_redhat_repo_baseurl }}/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
-dalibo_postgres_redhat_repo:
+pgdg_redhat_repo_baseurl: https://download.postgresql.org/pub/repos/yum/reporpms/
+pgdg_redhat_url: "{{ pgdg_redhat_repo_baseurl }}/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+postgresql_redhat_repo:
   - repo_key_url: "https://ftp.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG"
-    repo_rpm_install: "{{ dalibo_pgdg_redhat_url }}"
+    repo_rpm_install: "{{ pgdg_redhat_url }}"

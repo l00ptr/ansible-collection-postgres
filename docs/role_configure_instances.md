@@ -45,9 +45,9 @@ Example Playbook
             postgresql_version: 10
             pgdata_path: /var/lib/postgresql/10/test2
       roles:
-         - { role: dalibo.configure_extra_repo }
-         - { role: dalibo.postgresql_install }
-         - { role: dalibo.configure_instances }
+         - { role: l00ptr.configure_extra_repo }
+         - { role: l00ptr.postgresql_install }
+         - { role: l00ptr.configure_instances }
 
 License
 -------

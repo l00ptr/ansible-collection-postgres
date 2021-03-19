@@ -16,12 +16,12 @@ configure_extra_repo role from our collection to setup and configure the PGDG re
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    dalibo_postgresql_locales:
+    postgresql_locales:
       - 'en_US.UTF-8'
 
 List of locales this role will generate on Debian based system
 
-    dalibo_postgresql_packages 
+    postgresql_packages 
 
 List of package this role is configured to install
 
@@ -35,7 +35,7 @@ None.
       become: yes
       tasks:
         - import_role:
-            name: postgres.postgres.postgres_install
+            name: l00ptr.postgres.postgres_install
 
 
 ## License

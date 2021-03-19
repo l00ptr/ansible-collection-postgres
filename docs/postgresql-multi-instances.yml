@@ -1,0 +1,27 @@
+---
+# This example show how to use our collection to configure a 
+# few instances with different version of postgresql
+- hosts: all
+  become: true
+  vars:
+    postgresql_instances:
+      - name: "test2"
+        port: 5438
+        state: present
+        manage_slaves: false
+        postgresql_version: 10
+        pgdata_path: /var/lib/postgresql/10/test2
+      - name: "test3"
+        port: 5439
+        state: present
+        postgresql_version: 12
+        pgdata_path: /var/lib/postgresql/12/test3
+        custom_config_options:
+          - listen: "*"
+  tasks:
+    - import_role:
+        name: postgres.postgres.configure_pgdg_repo
+    - import_role:
+        name: postgres.postgres.postgresql_install
+    - import_role:
+      name: postgres.postgres.configure_instances

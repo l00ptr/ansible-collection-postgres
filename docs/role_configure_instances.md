@@ -12,7 +12,7 @@ that you can check the other role from this collection.
 Role Variables
 --------------
 
-    dalibo_postgresql_instances:
+    postgresql_instances:
       - name: "test2"
         port: 5438
         state: present
@@ -38,7 +38,7 @@ Example Playbook
 ----------------
     - hosts: servers
       vars:
-          dalibo_postgresql_instances:
+          postgresql_instances:
           - name: "test2"
             port: 5438
             state: present
@@ -46,8 +46,8 @@ Example Playbook
             pgdata_path: /var/lib/postgresql/10/test2
       roles:
          - { role: dalibo.configure_extra_repo }
-         - { role: dalibo.postgres_install }
-         - { role: dalibo.postgres_instance_configure }
+         - { role: dalibo.postgresql_install }
+         - { role: dalibo.configure_instances }
 
 License
 -------

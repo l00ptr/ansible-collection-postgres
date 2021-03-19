@@ -1,0 +1,4 @@
+postgresql_enablerepo: ""
+postgresql_locales:
+  - 'en_US.UTF-8'
+

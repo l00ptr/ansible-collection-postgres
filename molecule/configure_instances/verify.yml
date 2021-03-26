@@ -1,0 +1,25 @@
+---
+# This is an example playbook to execute Ansible tests.
+- name: Verify
+  hosts: all
+  vars:
+    postgres_pckg_base_name: "postgresql"
+  tasks:
+    - name: "Stat PG_VERSION file for postgres 10"
+      stat:
+        path: "/var/lib/postgresql/10/test2/PG_VERSION"
+      register: stat_pg10_version_file
+
+    - name: "Test if our postgres 10 instance has been init"
+      assert:
+        that:
+          - stat_pg10_version_file.stat.exists
+    - name: "Stat PG_VERSION file for postgres 12"
+      stat:
+        path: "/var/lib/postgresql/12/test3/PG_VERSION"
+      register: stat_pg12_version_file
+
+    - name: "Test if our postgres 12 instance has been init"
+      assert:
+        that:
+          - stat_pg12_version_file.stat.exists

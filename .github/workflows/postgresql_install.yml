@@ -19,6 +19,7 @@ jobs:
             image: geerlingguy/docker-debian10-ansible
         collection_role:
           - postgresql_install
+          - configure_instances 
     steps:
       - name: Check out code
         uses: actions/checkout@v1

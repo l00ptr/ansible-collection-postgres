@@ -1,0 +1,17 @@
+---
+
+- name: Prepare
+  hosts: docker
+  tasks:
+    - name: "Starting Docker service"
+      service:
+        name: docker
+        state: started
+
+- name: Prepare all host
+  hosts: all
+  tasks:
+    - name: Install gpg
+      package:
+        name: gpg
+        state: present

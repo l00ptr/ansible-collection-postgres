@@ -1,0 +1,12 @@
+---
+# defaults file for configure_pg_back
+postgresql_user: postgres
+postgresql_group: postgres
+postgresql_default_unix_socket_directories: /var/run/postgresql/
+postgresql_pg_back_version : v2.0.0
+postgresql_pg_back_bin_src_url: https://github.com/orgrim/pg_back/releases/download/{{ postgresql_pg_back_version }}/pg_back-{{ postgresql_pg_back_version }}-linux-amd64
+postgresql_pg_back_bin_dest_path: /usr/local/bin/pg_back
+postgresql_pg_back_default_backup_directory: /var/backups/postgresql/
+postgresql_pg_back_default_parallel_backup_jobs: 1
+postgresql_pg_back_default_purge_older_than: 30
+postgresql_pg_back_default_purge_min_keep: 0

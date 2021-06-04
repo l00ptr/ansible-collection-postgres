@@ -1,0 +1,11 @@
+---
+# tasks file for configure_pg_back
+- name: "pg_back | Get (go_)pg_back binary"
+  ansible.builtin.get_url:
+    url: "{{ postgresql_pg_back_bin_src_url }}"
+    dest: "{{ postgresql_pg_back_bin_dest_path }}"
+    mode: 0511
+
+- name: Include tasks to configure pg_back on our managed instances
+  include_tasks: configure-All.yml
+  loop: "{{ postgresql_instances }}"

@@ -1,0 +1,113 @@
+# pg_back configuration file
+
+# PostgreSQL binaries path. Leave empty to search $PATH
+bin_directory =
+
+# Where to store the dumps and other files. It can include the
+# {dbname} keyword that will be replaced by the name of the database
+# being dumped.
+backup_directory = {{ item.pg_back_conf.backup_directory | default(postgresql_pg_back_default_backup_directory + item.name) }}
+
+# Timestamp format to use in filenames of output files. Two values are
+# possible: legacy and rfc3339. For example legacy is 2006-01-02_15-04-05, and
+# rfc3339 is 2006-01-02T15:04:05-07:00. rfc3339 is the default
+# timestamp_format = rfc3339
+
+# PostgreSQL connection options. This are the usual libpq
+# variables. dbname is the database used to dump globals, acl,
+# configuration and pause replication. password is better set in
+# ~/.pgpass
+host = {{ item.unix_socket_directories | default(postgresql_default_unix_socket_directories) }}
+port = {{ item.port | default(5432) }}
+user =
+dbname = 
+
+# List of database names to dump. When left empty, dump all
+# databases. See with_templates to dump templates too. Separator is
+# comma.
+include_dbs =
+
+# List of database names not to dump. Separator is comma.
+exclude_dbs =
+
+# When set to true, database templates are also dumped, either
+# explicitly if listed in the include_dbs list or implicitly if
+# include_dbs is empty.
+with_templates = false
+
+# Format of the dump, understood by pg_dump. Possible values are
+# plain, custom, tar or directory.
+format = custom
+
+# When the format is directory, number of parallel jobs to dumps (-j
+# option of pg_dump)
+parallel_backup_jobs = {{ item.pg_back_conf.parallel_backup_jobs | default(postgresql_pg_back_default_parallel_backup_jobs) }}
+
+# When using a compressed binary format, e.g. custom or directory, adjust the
+# compression level between 0 and 9. Use -1 to keep the default level of pg_dump.
+compress_level = -1
+
+# Compute checksum a checksum file for each dump that can be checked
+# by the corresponding shaXsum -c command. Possible values are none to
+# disable checksums, sha1, sha224, sha256, sha384, and sha512.
+checksum_algorithm = none
+
+# Purge dumps older than this number of days. If the interval has to
+# be shorter than one day, use a duration with units, h for hours, m
+# for minutes, s for seconds, us for microseconds or ns for
+# nanoseconds, ex. 1h30m24s.
+purge_older_than = {{ item.pg_back_conf.purge_older_than | default(postgresql_pg_back_default_purge_older_than) }}
+
+# When purging older dumps, always keep this minimum number of
+# dumps. The default is 0, even if purge_older_than is 0 the dumps of
+# the current run are kept, if one wants to remove all dumps and not
+# keep anything, for example to just test for data corruption, then
+# purge_older_than shall be a negative duration.
+purge_min_keep = {{ item.pg_back_conf.purge_min_keep | default(postgresql_pg_back_default_purge_min_keep) }}
+
+# Number of pg_dump commands to run concurrently
+jobs = 1
+
+# inject these options to pg_dump
+pg_dump_options =
+
+# When dumping from a hot standby server, wait for exclusive locks to
+# be released within this number of seconds. Abort if exclusive locks
+# are still held. If a exclusive lock is granted and replication is
+# paused, the lock is held until to replication is resumed, causing
+# pg_dump to wait forever.
+pause_timeout = 3600
+
+# Commands to execute before dumping and after. The post-backup
+# command is always executed even in case of failure.
+pre_backup_hook = 
+post_backup_hook =
+
+# # Per database options. Use a ini section named the same as the
+# # database. These options take precedence over the global values
+# [dbname]
+
+# format =
+# parallel_backup_jobs =
+# compress_level =
+# checksum_algorithm =
+# purge_older_than =
+# purge_min_keep =
+
+# # List of schemas and tables to dump or exlude from the dump.
+# # Inclusion and exclusion rules of pg_dump apply, as well as
+# # pattern rules. Separate schema/table names with a semicolon
+# schemas =
+# exclude_schemas =
+
+# tables =
+# exclude_tables =
+
+# Include or exclude large objects in the dump. Leave the option commented to
+# keep the default behaviour, see pg_dump -b.
+# with_blobs = true
+
+# # inject these options to pg_dump. Use an empty value to cancel the
+# # global value of pg_dump_options
+# pg_dump_options =
+

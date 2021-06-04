@@ -1,13 +1,15 @@
 Role Name
 =========
 
-Role to download, install and configure pg_back
-A brief description of the role goes here.
+Role to download, install and configure pg_back. This role allows to create a 
+config file  and add a cron for each instance.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+To use this role, you should install and configure postgres from the PGDG. For 
+that you can check the other role from this collection.
+
 
 Role Variables
 --------------
@@ -31,7 +33,8 @@ URL of the pg_back binary
 Where we should copy the pg_back binary
 
     postgresql_pg_back_default_backup_directory: /var/backups/postgresql/
-Path where we should store our backups
+Path where we should store our backups. If this directory doesn't exist this
+role will create it.
 
     postgresql_pg_back_default_parallel_backup_jobs: 1
 Number of parallel jobs to dumps (-j option of pg_dump)
@@ -54,18 +57,34 @@ For more information please read the readme of this collection
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+You can use this role with some other comapnions (configure_pgdg_repo, 
+postgresql_install, configure__instance, etc) to deploy your PostgreSQL 
+instance.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+      - hosts: servers
+        vars:
+          postgresql_instances:
+          - name: "test2"
+            port: 5438
+            state: present
+            postgresql_version: 10
+            pgdata_path: /var/lib/postgresql/10/test2
+            pg_back_conf:
+              schedule_hour: 2
+              schedule_minute: 30
+        roles:
+          - postgres.postgres.configure_pgdg_repo
+          - postgres.postgres.postgresql_install
+          - postgres.postgres.configure_instances
+          - postgres.postgres.configure_pg_back
 
 License
 -------
-
 BSD
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was first created in 2016 by Jeff Geerling then forked (mostly to 
+split it into more atomic roles) by Julian Vanden Broeck (in 2020)
+

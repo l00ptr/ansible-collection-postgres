@@ -1,0 +1,4 @@
+- name: pg_back | Install package on Debian based system
+  apt:
+    deb: "{{ postgresql_pg_back_package_base_url }}pg_back_{{ postgresql_pg_back_version }}_linux_amd64.deb"
+    state: present

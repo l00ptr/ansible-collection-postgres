@@ -1,0 +1,4 @@
+- name: pg_back | Install package on Red Hat based system
+  yum:
+    name: "{{ postgresql_pg_back_package_base_url }}pg_back-{{ postgresql_pg_back_version }}-x86_64.rpm"
+    state: present

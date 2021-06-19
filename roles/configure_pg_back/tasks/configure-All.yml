@@ -1,0 +1,24 @@
+- name: Create backup directory
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ item.pg_back_conf.backup_directory | default(postgresql_pg_back_default_backup_directory) }}"
+    recurse: yes
+    owner: "{{ postgresql_user }}"
+    group: "{{ postgresql_group }}"
+
+- name: Create pg_back instance config
+  ansible.builtin.template:
+    src: pg_back.conf.j2
+    dest: /etc/pg_back/{{ item.name }}.conf
+    owner: "{{ postgresql_user }}"
+    group: "{{ postgresql_group }}"
+
+- name: Create pg_back cron config
+  ansible.builtin.cron:
+    name: "Cron dedicated to pg_back for {{ item.name }}"
+    cron_file: "pg_back_{{ item.name }}"
+    user: "{{ postgresql_user }}"
+    job: " {{ postgresql_pg_back_bin_dest_path }}"
+    weekday: "{{ item.pg_back_conf.schedule_weekday |default('*') }}"
+    hour: "{{ item.pg_back_conf.schedule_hour | default(6 | random) }}"
+    minute: "{{ item.pg_back_conf.schedule_minute | default(60|random) }}"

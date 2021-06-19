@@ -19,6 +19,7 @@ This collection is under develoment and currently only available for Debian 9 an
 - [configure_pgdg_repo](docs/role_configure_pgdg_repo.md) (Allow to install the PGDG repo)
 - [postgresql_install](docs/role_postgresql_install.md) (Allow to install the postgres packages)
 - [configure_instances](docs/role_configure_instances.md) (Allow to init and configure our postgres instances)
+- [configure_pg_back](docs/role_configure_pg_back.md) (Allow to install and configure pg_back)
 
 ## Using this collection
 

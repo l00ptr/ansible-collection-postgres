@@ -1,0 +1,9 @@
+---
+# tasks file for configure_pg_back
+- name: Include tasks to install pg_back on our managed instances
+  include_tasks: "install-{{ ansible_os_family }}.yml"
+
+
+- name: Include tasks to configure pg_back on our managed instances
+  include_tasks: configure-All.yml
+  loop: "{{ postgresql_instances }}"

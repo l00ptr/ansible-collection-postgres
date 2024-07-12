@@ -1,3 +1,4 @@
 ---
-- include: synchronize_db.yml
+- name: Synchronize databases
+  include_tasks: synchronize_db.yml
   loop: "{{ postgres_databases_to_sync }}"

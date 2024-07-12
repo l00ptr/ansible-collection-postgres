@@ -42,9 +42,9 @@
   become_user: postgres
 
 - name: Execute postscripts
-  postgresql_query:
+  community.postgresql.postgresql_script:
     db: "{{ item.dest_name }}"
-    path_to_script: "{{ script }}"
+    path: "{{ script }}"
   become_user: postgres
   loop: "{{ item.postscripts|default([]) }}"
   loop_control:
